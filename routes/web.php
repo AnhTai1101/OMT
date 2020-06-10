@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/all', 'repositoryController@all')->name('home');
+Route::get('/select', 'repositoryController@select');
+Route::post('/add', 'repositoryController@add')->name('add-post');
+Route::get('/delete/{guid}', 'repositoryController@del')->name('delete');
+Route::post('/update','repositoryController@update')->name('update-post');
