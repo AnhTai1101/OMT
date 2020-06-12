@@ -12,6 +12,11 @@
                             <label>Name</label>
                             <input class="form-control" id="name" name="_name" placeholder="name">
                         </fieldset>
+                        <fieldset class="form-group">
+                            <label>Password</label>
+                            <input class="form-control" name="_password" >
+                        </fieldset>
+
                     
                 </div>
                 <div class="modal-footer">

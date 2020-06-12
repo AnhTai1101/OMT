@@ -12,9 +12,9 @@ class repositoryController extends Controller
      * Class constructor.
      */
     protected $repo;
-    public function __construct()
+    public function __construct(InternRepository $repo)
     {
-        $this->repo = new InternRepository;
+        $this->repo = $repo;
     }
 
     function all(){
@@ -33,20 +33,27 @@ class repositoryController extends Controller
     function add(Request $req){
         $this->repo->Add($req);
         $this->repo->SelectAll();
-        return redirect(route('home'));
+        return redirect(route('home1'));
     }
 
     //del
     function del($guid){
         $this->repo->Delete($guid);
-        return redirect(route('home'));
+        return redirect(route('home1'));
     }
 
     // update
     function update(Request $req){
         $guid = $req->guid;
         $this->repo->Update($req,$guid);
-        return redirect(route('home'));
+        return redirect(route('home1'));
 
+    }
+
+    //search
+    function search(Request $search){
+        $data =  $this->repo->Search($search);
+        // return json_encode($data);
+        return response($data);
     }
 }

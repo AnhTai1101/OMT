@@ -3,8 +3,9 @@
 
     use App\Models\intern_version;
     use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
-    class InternRepository{
+class InternRepository{
 
         // guidv4
         function guidv4()
@@ -46,6 +47,7 @@
         // add
         function Add($req){
             $add = new intern_version;
+            $add->password = Hash::make($req->_password);
             $add->name = $req->_name;
             $add->guid = $this->guidv4();
             $add->created_at = date('Y-m-d H:i:s',time());
@@ -55,8 +57,33 @@
         //delete
         function Delete($guid){
             intern_version::where('guid', $guid)->delete();
+        }
 
+        // search
+        function Search($search){
+            $like = $search->like;
+            $skip = $search->skip;
+            $take = $search->take;
+            // dd($skip);
+            $search = intern_version::where('name', 'like', '%'.$like.'%');
+            if($skip !== null){
+                $search = $search->skip($skip);
+            }else{
+                $search = $search->skip(0);
+            }
 
+            // take
+            if($take !== null){
+                $search = $search->take($take);
+            }else{
+                $search = $search->take(5);
+            }
+            $search = $search->pluck('name');
+            
+            // $search = intern_version::where('name', 'like', '%'.$like.'%')->take(5)->pluck('name');
+            // dd($search);
+            // dd($search);
+            return $search;
         }
     }
 
