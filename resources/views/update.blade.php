@@ -13,31 +13,22 @@
                         <form role="form">
                             <fieldset class="form-group">
                                 <label>Text Input with Placeholder</label>
-                                <input class="form-control" placeholder="Enter text">
+                                <input name="id-edit" class="form-control" placeholder="Enter text">
                             </fieldset>
                             <fieldset class="form-group">
-                                <label>Text area</label>
-                                <textarea class="form-control" rows="3"></textarea>
+                                <label>Text Input with Placeholder</label>
+                                <input name="name-edit" class="form-control" placeholder="Enter text">
                             </fieldset>
-                            <div class="form-group">
-                                <label>Status</label>
-                                <select class="form-control">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-                            </div>
                         </form>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success">Save</button>
+                <button onclick="update()" type="button" class="btn btn-success">Save</button>
                 <button type="reset" class="btn btn-primary">Làm Lại</button>
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
 </div>
+

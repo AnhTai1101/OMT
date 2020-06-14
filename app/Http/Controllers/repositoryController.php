@@ -23,6 +23,11 @@ class repositoryController extends Controller
         return view('index', compact('repo'));
     }
 
+    function getAll(){
+        $getAll = $this->repo->SelectAll();
+        return collect($getAll);
+    }
+
     // select
     function select(){
 
@@ -32,28 +37,49 @@ class repositoryController extends Controller
     // post new
     function add(Request $req){
         $this->repo->Add($req);
-        $this->repo->SelectAll();
-        return redirect(route('home1'));
+        $data = $this->repo->SelectAll();
+        return collect($data);
+
+        // return redirect(route('home1'));
     }
 
     //del
-    function del($guid){
+    function del(Request $guid){
+        $guid = $guid->_id;
         $this->repo->Delete($guid);
-        return redirect(route('home1'));
+        $data = $this->repo->SelectAll();
+        return collect($data);
+
     }
 
     // update
     function update(Request $req){
-        $guid = $req->guid;
-        $this->repo->Update($req,$guid);
-        return redirect(route('home1'));
+        $this->repo->Update($req);
+        $data = $this->repo->SelectAll();
+        return collect($data);
 
     }
 
     //search
     function search(Request $search){
         $data =  $this->repo->Search($search);
-        // return json_encode($data);
-        return response($data);
+        return collect($data);
+        // return json_encode($data[0]->created_at);
+    }
+
+    //search2
+    function search2(Request $search2){
+        $result = $this->repo->getTake($search2);
+        return collect($result);
+    }
+
+    // test
+    function test(){
+        return view('tai.test.test');
+    }
+    //post-test
+    function postTest(Request $search){
+        $result = $this->repo->getTake($search);
+        return collect($result);
     }
 }

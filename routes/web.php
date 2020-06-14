@@ -22,9 +22,13 @@ Route::group(['prefix' => 'backend','middleware'=>'taiLogin'], function () {
     Route::get('/all', 'repositoryController@all')->name('home1');
     Route::get('/select', 'repositoryController@select');
     Route::post('/add', 'repositoryController@add')->name('add-post');
-    Route::get('/delete/{guid}', 'repositoryController@del')->name('delete');
+    Route::post('/delete', 'repositoryController@del')->name('delete');
     Route::post('/update','repositoryController@update')->name('update-post');
     Route::post('/search', 'repositoryController@search')->name('search');
+    Route::get('/get-all', 'repositoryController@getAll')->name('fn-get-all');
+    Route::post('/search2', 'repositoryController@search2')->name('search2');
+    Route::get('/test', 'repositoryController@test')->name('tai-test');
+    Route::post('/post-test', 'repositoryController@postTest')->name('post-test');
 });
 
 Auth::routes();
@@ -37,3 +41,6 @@ Route::group(['prefix' => 'admin','namespace'=>'Tai'], function () {
     Route::post('/post-login', 'TaiLoginController@postLogin')->name('tai-post-login');
     Route::get('/logout','TaiLoginController@logout')->name('logout');
 });
+
+// test
+

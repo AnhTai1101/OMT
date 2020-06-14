@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Freetuts.net hướng dẫn tạo Filter Table</h2>
+        
+        <input type="text" id="myInput" placeholder="Search for Club.." title="Type in a name of Club">
+        
+        <table id="myTable">
+            <tr class="header">
+                <th style="width:60%;">Club</th>
+                <th style="width:40%;">Country</th>
+            </tr>
+            <tr>
+                <td>Arsenal</td>
+                <td>England</td>
+            </tr>
+            <tr>
+                <td>Atletico Madrid</td>
+                <td>Spain</td>
+            </tr>
+            <tr>
+                <td>Barcelona</td>
+                <td>Spain</td>
+            </tr>
+            <tr>
+                <td>Liverpool</td>
+                <td>England</td>
+            </tr>
+            <tr>
+                <td>Real Madrid</td>
+                <td>Spain</td>
+            </tr>
+            <tr>
+                <td>Bayern Munich</td>
+                <td>Germany</td>
+            </tr>
+            <tr>
+                <td>Borussia Dortmund</td>
+                <td>Germany</td>
+            </tr>
+            <tr>
+                <td>Paris Saint-Germain</td>
+                <td>France</td>
+            </tr>
+            <tr>
+                <td>Manchester United</td>
+                <td>England</td>
+            </tr>
+            <tr>
+                <td>Monaco</td>
+                <td>France</td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        // lấy thẻ input
+        var input = document.getElementById("myInput");
+        // định nghĩa hàm xử lý myFunction
+        function myFunction() {
+          var filter, table, tr, td, i;
+          // lấy giá trị người dùng nhập
+          filter = input.value.toUpperCase();
+       
+          // lấy phần bảng hiển thị kết quả
+          table = document.getElementById("myTable");
+          // lấy tất cả các thẻ tr
+          tr = table.getElementsByTagName("tr");
+       
+          //Nếu filter không có giá trị ẩn các kết quả
+          if (!filter) {
+            table.style.display = "none";
+          }else{
+            // lặp qua tất cả các thẻ tr
+            for (i = 0; i < tr.length; i++) {
+              // lấy giá trị của thẻ td đầu tiên đại diện cho tên club
+              td = tr[i].getElementsByTagName("td")[0];
+              if (td) {
+                // kiểm tra giá trị filter có tồn tại trong thẻ tr không
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                  //nếu có hiển thị chúng
+                  table.style.display = "table";
+                  tr[i].style.display = "";
+                } else {
+                  // nếu không ẩn chúng
+                  tr[i].style.display = "none";
+                }
+              }       
+            }
+          }
+        }
+        //gán sự kiện cho thẻ input
+        input.addEventListener("keyup", myFunction);
+      </script>
+</body>
+</html>

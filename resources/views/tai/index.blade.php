@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 
 <head>
@@ -19,9 +19,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">​
-
     
 </head>
 
@@ -34,7 +32,11 @@
             
             <div class="container">
                 {{-- search --}}
-                    {{-- <div class="row">
+                {{-- <form action="{{ route('search') }}" method="post"> --}}
+                {{-- <form> --}}
+                    {{-- @csrf --}}
+                    <div class="row">
+                        
                         <div class="col-3">
                             <div class="md-form mt-0">
                                 <input required class="form-control" id="like" type="text" placeholder="Like" aria-label="Search">
@@ -52,42 +54,22 @@
                         </div>
                         <div class="col-3">
                             <button onclick="search()" type="button" class="btn btn-primary">Search</button>
+                            {{-- <button type="submit" class="btn btn-primary">Search</button> --}}
                         </div>
-                    </div> --}}
-                {{-- end search --}}
+                        
+                    </div>
                 {{-- </form> --}}
                 {{-- end Search --}}
-                    <br>
-                    <h3>Search 2</h3>
-                {{--  search 2  --}}
-                <div class="input-group md-form form-sm form-2 pl-0">
-                    <input id="key-search2" name="search2" class="form-control my-0 py-1 lime-border" type="text" placeholder="Search" aria-label="Search">
-                    <div onclick="search2()" class="input-group-append">
-                        <span class="input-group-text lime lighten-2" id="basic-text1">
-                            <i class="fas fa-search text-grey" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                </div>
-                {{--  end search 2  --}}
 
                 <div class="card shadow mb-4">
-                    <input type="hidden" id="page-max" value="">
                     <div class="card-header py-3">
                         <a class="btn btn-primary" data-toggle="modal" data-target="#modal-add" href='#'>thêm</a>
-                        
                         <a class="btn btn-primary" style="float: right" href='{{ route('logout') }}'>Logout</a>
-                        <select name="take2" id="take2" onchange="changeFunc()">
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                        </select>
-                        {{-- <input style="float: right" class="btn" name="take2" type="number" value="5" aria-label="Search"> --}}
                         {{ Auth::user()->name }}
                     </div>
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <p class="text-success">Có tất cả <span id="span-count">0</span> phần tử</p>
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
@@ -98,7 +80,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="XuatData">
-                                    {{-- @foreach($repo as $row)
+                                    @foreach($repo as $row)
                                     <tr>
                                         <td>{{ $row->guid }}</td>
                                         <td>{{ $row->name }}</td>
@@ -112,11 +94,9 @@
                                             </a>
                                         </td>
                                     </tr>
-                                    @endforeach --}}
+                                    @endforeach
                                 </tbody>
                             </table>
-                            <div class="pagination">
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -164,8 +144,47 @@
         </div>
      </div>
     </div>
-    @include('create')
-    @include('update')
+  @include('create')
+  {{-- @include('update') --}}
+    @foreach ($repo as $item)
+        <div class="modal fade" id="modal-edit{{ $item->guid }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <form action="{{ route('update-post') }}" method="POST" role="form">
+                        @csrf
+                        <div class="modal-body">
+                            
+                            <div class="row" style="margin: 5px">
+                                <div class="col-lg-12">
+                                    <input type="hidden" name="guid" value="{{ $item->guid }}">
+                                    <fieldset class="form-group">
+                                        <label>Text Input with Placeholder</label>
+                                        <input class="form-control" value="{{ $item->guid }}">
+                                    </fieldset>
+                                    <fieldset class="form-group">
+                                        <label>Text area</label>
+                                        <textarea name="name" class="form-control" rows="3">{{ $item->name }}</textarea>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Save</button>
+                            {{-- <button type="reset" class="btn btn-primary">Làm Lại</button> --}}
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
     <!-- Bootstrap core JavaScript-->
     {{-- <script src="vendor/jquery/jquery.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>

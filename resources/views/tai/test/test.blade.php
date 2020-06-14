@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 
 <head>
@@ -19,9 +19,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">​
-
     
 </head>
 
@@ -34,7 +32,11 @@
             
             <div class="container">
                 {{-- search --}}
-                    {{-- <div class="row">
+                {{-- <form action="{{ route('search') }}" method="post"> --}}
+                {{-- <form> --}}
+                    {{-- @csrf --}}
+                    <div class="row">
+                        
                         <div class="col-3">
                             <div class="md-form mt-0">
                                 <input required class="form-control" id="like" type="text" placeholder="Like" aria-label="Search">
@@ -52,73 +54,20 @@
                         </div>
                         <div class="col-3">
                             <button onclick="search()" type="button" class="btn btn-primary">Search</button>
+                            {{-- <button type="submit" class="btn btn-primary">Search</button> --}}
                         </div>
-                    </div> --}}
-                {{-- end search --}}
+                        
+                    </div>
                 {{-- </form> --}}
                 {{-- end Search --}}
-                    <br>
-                    <h3>Search 2</h3>
-                {{--  search 2  --}}
-                <div class="input-group md-form form-sm form-2 pl-0">
-                    <input id="key-search2" name="search2" class="form-control my-0 py-1 lime-border" type="text" placeholder="Search" aria-label="Search">
-                    <div onclick="search2()" class="input-group-append">
-                        <span class="input-group-text lime lighten-2" id="basic-text1">
-                            <i class="fas fa-search text-grey" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                </div>
-                {{--  end search 2  --}}
 
                 <div class="card shadow mb-4">
-                    <input type="hidden" id="page-max" value="">
                     <div class="card-header py-3">
                         <a class="btn btn-primary" data-toggle="modal" data-target="#modal-add" href='#'>thêm</a>
-                        
                         <a class="btn btn-primary" style="float: right" href='{{ route('logout') }}'>Logout</a>
-                        <select name="take2" id="take2" onchange="changeFunc()">
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                        </select>
-                        {{-- <input style="float: right" class="btn" name="take2" type="number" value="5" aria-label="Search"> --}}
                         {{ Auth::user()->name }}
                     </div>
 
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <p class="text-success">Có tất cả <span id="span-count">0</span> phần tử</p>
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>Guid</th>
-                                        <th>Name</th>
-                                        <th>Created_at</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="XuatData">
-                                    {{-- @foreach($repo as $row)
-                                    <tr>
-                                        <td>{{ $row->guid }}</td>
-                                        <td>{{ $row->name }}</td>
-                                        <td>{{ $row->created_at }}</td>
-                                        <td>
-                                            
-                                                <button class="btn btn-primary edit" data-toggle="modal" data-target="#modal-edit{{ $row->guid }}" type="button"><i class="fas fa-edit"></i></button>
-                                            
-                                            <a href="{{ route('delete', $row->guid) }}">
-                                                <button class="btn btn-danger delete" data-toggle="modal" data-target="" type="button"><i class="fas fa-trash-alt"></i></button>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    @endforeach --}}
-                                </tbody>
-                            </table>
-                            <div class="pagination">
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <!-- /.container-fluid -->
@@ -164,9 +113,35 @@
         </div>
      </div>
     </div>
-    @include('create')
-    @include('update')
-    <!-- Bootstrap core JavaScript-->
+    <div class="modal fade" id="modal-add">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <form action="{{ route('post-test') }}" id="form-create" method="POST" role="form">
+                    <div class="modal-body">
+                        
+                            @csrf
+                            <fieldset class="form-group">
+                                <label>Name</label>
+                                <input class="form-control" id="name" name="_name" placeholder="name">
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <label>Password</label>
+                                <input class="form-control" name="_password" >
+                            </fieldset>
+    
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit"  class="btn btn-primary">thêm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     {{-- <script src="vendor/jquery/jquery.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
